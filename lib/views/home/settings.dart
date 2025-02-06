@@ -1,5 +1,4 @@
 import 'package:contest_flow/extentions/theme.dart';
-import 'package:contest_flow/services/notificationservice.dart';
 import 'package:contest_flow/services/prefservice.dart';
 import 'package:contest_flow/util.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +96,7 @@ class _SettingsViewState extends State<SettingsView> {
                       color: Theme.of(context).colorScheme.surfaceTint,
                     ),
                     onTap: () async => await Util.launchURL(
-                        'https://github.com/user-grinch/Rivo'),
+                        'https://github.com/user-grinch/ContestFlow'),
                   ),
                   ListTile(
                     title: const Text('Support Us on Patreon'),

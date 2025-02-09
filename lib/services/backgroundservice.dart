@@ -38,14 +38,7 @@ Future<bool> onIosBackground(ServiceInstance service) async {
 }
 
 void scheduleDailyNotification() {
-  DateTime now = DateTime.now();
-  DateTime next8AM = DateTime(now.year, now.month, now.day, 8, 0, 0);
-
-  if (now.isAfter(next8AM)) {
-    next8AM = next8AM.add(const Duration(days: 1));
-  }
-
-  Timer.periodic(const Duration(days: 1), (timer) {
+  Timer.periodic(const Duration(hours: 20), (timer) {
     if (SharedPrefService().getBool('daily_update')) {
       String? contestsJson = SharedPrefService().getString('contests');
       if (contestsJson != null) {

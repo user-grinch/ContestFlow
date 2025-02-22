@@ -3,12 +3,14 @@ import 'package:contest_flow/services/backgroundservice.dart';
 import 'package:contest_flow/services/notificationservice.dart';
 import 'package:contest_flow/services/dataservice.dart';
 import 'package:contest_flow/services/prefservice.dart';
+import 'package:contest_flow/theme.dart';
 import 'package:contest_flow/views/home.dart';
 import 'package:contest_flow/views/home/settings.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,37 +25,30 @@ void main() async {
     systemNavigationBarColor: Colors.transparent,
   ));
 
-  final darkColorScheme = ColorScheme.fromSeed(
-    seedColor: Colors.blueAccent,
-    brightness: Brightness.dark,
-  );
-
-  runApp(
-    BlocProvider(
-      create: (context) => DataService(),
-      lazy: false,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: darkColorScheme,
-          useMaterial3: true,
-          textTheme: GoogleFonts.ralewayTextTheme().apply(
-            bodyColor: darkColorScheme.onSurface,
-            displayColor: darkColorScheme.onSurface,
-          ),
-          pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-            },
-          ),
+  runApp(ChangeNotifierProvider(
+    create: (context) => ThemeProvider(),
+    child: DynamicColorBuilder(builder: (
+      ColorScheme? lightDynamic,
+      ColorScheme? darkDynamic,
+    ) {
+      return BlocProvider(
+        create: (context) => DataService(),
+        lazy: false,
+        child: Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: getTheme(lightDynamic, themeProvider, false),
+              darkTheme: getTheme(darkDynamic, themeProvider, true),
+              themeMode: ThemeMode.system,
+              routes: {
+                homeRoute: (context) => HomeView(),
+                settingsRoute: (context) => SettingsView(),
+              },
+            );
+          },
         ),
-        themeMode: ThemeMode.dark,
-        initialRoute: homeRoute,
-        routes: {
-          homeRoute: (context) => HomeView(),
-          settingsRoute: (context) => SettingsView(),
-        },
-      ),
-    ),
-  );
+      );
+    }),
+  ));
 }

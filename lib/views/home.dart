@@ -1,8 +1,11 @@
+import 'package:contest_flow/services/prefservice.dart';
+import 'package:contest_flow/theme.dart';
 import 'package:contest_flow/views/home/appbar.dart';
 import 'package:contest_flow/views/home/contest.dart';
 import 'package:contest_flow/views/home/navigation.dart';
 import 'package:contest_flow/views/home/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -27,6 +30,13 @@ class _HomeViewState extends State<HomeView> {
       }
     });
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration(milliseconds: 100), () async {
+        await context.read<ThemeProvider>().initTheme();
+        await SharedPrefService().init();
+      });
+    });
   }
 
   @override

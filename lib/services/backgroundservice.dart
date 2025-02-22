@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:contest_flow/constants/pref.dart';
 import 'package:contest_flow/modal/contestdata.dart';
 import 'package:contest_flow/services/notificationservice.dart';
 import 'package:contest_flow/services/prefservice.dart';
@@ -39,8 +40,8 @@ Future<bool> onIosBackground(ServiceInstance service) async {
 
 void scheduleDailyNotification() {
   Timer.periodic(const Duration(hours: 20), (timer) {
-    if (SharedPrefService().getBool('daily_update')) {
-      String? contestsJson = SharedPrefService().getString('contests');
+    if (SharedPrefService().getBool(PREF_DAILY_UPDATE)) {
+      String? contestsJson = SharedPrefService().getString(PREF_STORE_CONTEST);
       if (contestsJson != null) {
         List<dynamic> contestsData = jsonDecode(contestsJson);
         List<ContestData> contests =
@@ -72,8 +73,8 @@ void scheduleDailyNotification() {
 
 void scheduleContestReminders() {
   Timer.periodic(const Duration(minutes: 30), (timer) async {
-    if (SharedPrefService().getBool('contest_reminder')) {
-      String? contestsJson = SharedPrefService().getString('contests');
+    if (SharedPrefService().getBool(PREF_CONTEST_REMINDER)) {
+      String? contestsJson = SharedPrefService().getString(PREF_STORE_CONTEST);
       if (contestsJson != null) {
         List<dynamic> contestsData = jsonDecode(contestsJson);
         List<ContestData> contests =

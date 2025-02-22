@@ -1,10 +1,12 @@
+import 'package:contest_flow/extentions/theme.dart';
 import 'package:contest_flow/modal/contestdata.dart';
 import 'package:contest_flow/services/dataservice.dart';
+import 'package:contest_flow/util.dart';
 import 'package:contest_flow/widgets/contestcard.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ContestView extends StatefulWidget {
   const ContestView({super.key});
@@ -28,36 +30,6 @@ class _ContestViewState extends State<ContestView> {
     super.dispose();
   }
 
-  Widget buildLoadingState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Modern Cupertino-style loader
-          const CupertinoActivityIndicator(radius: 16),
-
-          const SizedBox(height: 20),
-
-          // Smooth fade-in text animation
-          AnimatedOpacity(
-            opacity: 1.0,
-            duration: const Duration(milliseconds: 800),
-            child: Text(
-              "Fetching Contests...",
-              style: GoogleFonts.raleway(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey.shade700,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DataService, List<ContestData>>(
@@ -73,14 +45,37 @@ class _ContestViewState extends State<ContestView> {
               Text(
                 "Fetching contents...",
                 style: GoogleFonts.raleway(
+                  color: context.colorScheme.onSurfaceVariant,
                   fontSize: 18,
+                ),
+              ),
+              FilledButton.tonal(
+                onPressed: () async {
+                  Util.showToast("Refreshing data");
+                  await context.read<DataService>().refresh();
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      HugeIcons.strokeRoundedRefresh,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Refresh',
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           );
         }
         List<ContestData> runningContests =
-            state.where((c) => c.phase == ContestPhase.coding).toList();
+            state.where((c) => c.phase == ContestPhase.running).toList();
         List<ContestData> upcomingContests =
             state.where((c) => c.phase == ContestPhase.before).toList();
 
@@ -98,11 +93,28 @@ class _ContestViewState extends State<ContestView> {
                 if (runningContests.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Running",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Running",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        IconButton(
+                          onPressed: () async {
+                            Util.showToast("Refreshing data");
+                            await context.read<DataService>().refresh();
+                          },
+                          icon: Icon(
+                            HugeIcons.strokeRoundedRefresh,
+                            size: 18,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   ...runningContests
                       .map((contest) => ContestCard(data: contest)),
@@ -113,11 +125,29 @@ class _ContestViewState extends State<ContestView> {
                 if (upcomingContests.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Upcoming",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Upcoming",
+                          style: TextStyle(
+                            color: context.colorScheme.onSurfaceVariant,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        IconButton(
+                          onPressed: () async {
+                            Util.showToast("Refreshing data");
+                            await context.read<DataService>().refresh();
+                          },
+                          icon: Icon(
+                            HugeIcons.strokeRoundedRefresh,
+                            size: 18,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   ...upcomingContests
                       .map((contest) => ContestCard(data: contest)),

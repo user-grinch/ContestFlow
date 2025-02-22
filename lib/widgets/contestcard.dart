@@ -5,9 +5,40 @@ import 'package:contest_flow/extentions/theme.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 
+const String codechefRegisterURL = "https://www.codechef.com/";
+const String codeforcesRegisterURL =
+    "https://codeforces.com/contestRegistration/";
+const String leetcodeRegisterURL = "https://leetcode.com/contest/";
+
 class ContestCard extends StatelessWidget {
   final ContestData data;
   const ContestCard({super.key, required this.data});
+
+  ImageProvider _getProviderImage(ContestProvider provider) {
+    switch (provider) {
+      case ContestProvider.cc:
+        return AssetImage('assets/source-icons/cc.png');
+      case ContestProvider.cf:
+        return AssetImage('assets/source-icons/cf.png');
+      case ContestProvider.lc:
+        return AssetImage('assets/source-icons/lc.png');
+      default:
+        return AssetImage('assets/source-icons/default.png');
+    }
+  }
+
+  String _getProviderLabel(ContestProvider provider) {
+    switch (provider) {
+      case ContestProvider.cc:
+        return 'CodeChef';
+      case ContestProvider.cf:
+        return 'Codeforces';
+      case ContestProvider.lc:
+        return 'LeetCode';
+      default:
+        return 'OnlineJudge';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +55,7 @@ class ContestCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Container(
         decoration: BoxDecoration(
-          color: context.colorScheme.secondaryContainer.withAlpha(50),
+          color: context.colorScheme.secondaryContainer.withAlpha(100),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(
@@ -35,17 +66,25 @@ class ContestCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: context.colorScheme.secondaryContainer,
-                    child: Text(
-                      data.type.name.toUpperCase(),
-                      style: context.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: context.colorScheme.onPrimaryContainer,
+                  Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 35,
+                        backgroundColor: context.colorScheme.secondaryContainer
+                            .withAlpha(150),
+                        child: Image(
+                          image: _getProviderImage(data.provider),
+                          width: 50,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _getProviderLabel(data.provider),
+                        style: context.textTheme.titleMedium?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -55,10 +94,11 @@ class ContestCard extends StatelessWidget {
                         Text(
                           data.name,
                           style: context.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: context.colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 12),
                         Row(
                           children: [
                             Icon(
@@ -102,8 +142,13 @@ class ContestCard extends StatelessWidget {
                 children: [
                   FilledButton.tonal(
                     onPressed: () {
-                      Util.launchURL(
-                          "https://codeforces.com/contestRegistration/${data.id}");
+                      if (data.provider == ContestProvider.cc) {
+                        Util.launchURL("$codechefRegisterURL${data.id}");
+                      } else if (data.provider == ContestProvider.cf) {
+                        Util.launchURL("$codeforcesRegisterURL${data.id}");
+                      } else if (data.provider == ContestProvider.lc) {
+                        Util.launchURL("$leetcodeRegisterURL${data.id}");
+                      }
                     },
                     child: Row(
                       children: [

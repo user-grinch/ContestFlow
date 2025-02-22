@@ -9,7 +9,9 @@
 - Dark mode support.
 
 ## DataSource
+- CodeChef
 - Codeforces
+- LeetCode
 
 Others planned
 

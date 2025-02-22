@@ -1,3 +1,5 @@
+import 'package:contest_flow/constants/pref.dart';
+import 'package:contest_flow/services/prefservice.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manage_calendar_events/manage_calendar_events.dart';
@@ -68,5 +70,11 @@ class Util {
     } catch (e) {
       debugPrint('Error occurred: $e');
     }
+  }
+
+  static bool isAnyProviderSelected() {
+    return SharedPrefService().getBool(PREF_PROVIDER_CODECHEF, def: true) ||
+        SharedPrefService().getBool(PREF_PROVIDER_CODEFORCES, def: true) ||
+        SharedPrefService().getBool(PREF_PROVIDER_LEETCODE, def: true);
   }
 }

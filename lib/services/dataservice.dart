@@ -150,18 +150,18 @@ class DataService extends Cubit<List<ContestData>> {
   Future<void> refresh() async {
     List<ContestData> contests = [];
     bool dbOp = false;
-    if (SharedPrefService().getBool(PREF_PROVIDER_CODEFORCES)) {
+    if (SharedPrefService().getBool(PREF_PROVIDER_CODEFORCES, def: true)) {
       Map<String, dynamic>? data = await _fetchCodeforces();
       _parseCodeforces(data, contests);
       dbOp = true;
     }
 
-    if (SharedPrefService().getBool(PREF_PROVIDER_LEETCODE)) {
+    if (SharedPrefService().getBool(PREF_PROVIDER_LEETCODE, def: true)) {
       Map<String, dynamic>? data = await _fetchLeetcode();
       _parseLeetcode(data, contests);
       dbOp = true;
     }
-    if (SharedPrefService().getBool(PREF_PROVIDER_CODECHEF)) {
+    if (SharedPrefService().getBool(PREF_PROVIDER_CODECHEF, def: true)) {
       Map<String, dynamic>? data = await _fetchCodechef();
       _parseCodechef(data, contests);
       dbOp = true;

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.grinch.contestflow.contest_flow"
+    namespace = "com.grinch.contestflow"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.grinch.contestflow.contest_flow"
+        applicationId = "com.grinch.contestflow"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

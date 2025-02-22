@@ -1,6 +1,8 @@
+import 'package:contest_flow/constants/pref.dart';
 import 'package:contest_flow/extentions/theme.dart';
 import 'package:contest_flow/modal/contestdata.dart';
 import 'package:contest_flow/services/dataservice.dart';
+import 'package:contest_flow/services/prefservice.dart';
 import 'package:contest_flow/util.dart';
 import 'package:contest_flow/widgets/contestcard.dart';
 import 'package:flutter/material.dart';
@@ -38,17 +40,26 @@ class _ContestViewState extends State<ContestView> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(),
+              if (Util.isAnyProviderSelected()) CircularProgressIndicator(),
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                "Fetching contents...",
-                style: GoogleFonts.raleway(
-                  color: context.colorScheme.onSurfaceVariant,
-                  fontSize: 18,
+              if (Util.isAnyProviderSelected())
+                Text(
+                  "Fetching contents...",
+                  style: GoogleFonts.raleway(
+                    color: context.colorScheme.onSurfaceVariant,
+                    fontSize: 18,
+                  ),
                 ),
-              ),
+              if (!Util.isAnyProviderSelected())
+                Text(
+                  "No provider selected in settings",
+                  style: GoogleFonts.raleway(
+                    color: context.colorScheme.onSurfaceVariant,
+                    fontSize: 18,
+                  ),
+                ),
               FilledButton.tonal(
                 onPressed: () async {
                   Util.showToast("Refreshing data");

@@ -1,4 +1,4 @@
-package com.grinch.contestflow.contest_flow
+package com.grinch.contestflow
 
 import io.flutter.embedding.android.FlutterActivity
 

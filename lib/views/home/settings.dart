@@ -49,7 +49,8 @@ class _SettingsViewState extends State<SettingsView> {
                     title: const Text('Contest Reminders'),
                     subtitle:
                         const Text('Sends out notifications before contests'),
-                    value: SharedPrefService().getBool(PREF_CONTEST_REMINDER),
+                    value: SharedPrefService()
+                        .getBool(PREF_CONTEST_REMINDER, def: true),
                     onChanged: (value) async {
                       SharedPrefService()
                           .saveBool(PREF_CONTEST_REMINDER, value);
@@ -61,7 +62,8 @@ class _SettingsViewState extends State<SettingsView> {
                     title: const Text('Daily Updates'),
                     subtitle: const Text(
                         'Sends out notifications for upcoming contests'),
-                    value: SharedPrefService().getBool(PREF_DAILY_UPDATE),
+                    value: SharedPrefService()
+                        .getBool(PREF_DAILY_UPDATE, def: true),
                     onChanged: (value) async {
                       SharedPrefService().saveBool(PREF_DAILY_UPDATE, value);
                       setState(() {});
@@ -97,7 +99,8 @@ class _SettingsViewState extends State<SettingsView> {
                     activeColor: context.colorScheme.onSurface,
                     title: const Text('Codechef'),
                     subtitle: const Text('Fetches data for Codechef contests'),
-                    value: SharedPrefService().getBool(PREF_PROVIDER_CODECHEF),
+                    value: SharedPrefService()
+                        .getBool(PREF_PROVIDER_CODECHEF, def: true),
                     onChanged: (value) async {
                       SharedPrefService()
                           .saveBool(PREF_PROVIDER_CODECHEF, value);
@@ -109,8 +112,8 @@ class _SettingsViewState extends State<SettingsView> {
                     title: const Text('Codeforces'),
                     subtitle:
                         const Text('Fetches data for Codeforces contests'),
-                    value:
-                        SharedPrefService().getBool(PREF_PROVIDER_CODEFORCES),
+                    value: SharedPrefService()
+                        .getBool(PREF_PROVIDER_CODEFORCES, def: true),
                     onChanged: (value) async {
                       SharedPrefService()
                           .saveBool(PREF_PROVIDER_CODEFORCES, value);
@@ -121,7 +124,8 @@ class _SettingsViewState extends State<SettingsView> {
                     activeColor: context.colorScheme.onSurface,
                     title: const Text('Leetcode'),
                     subtitle: const Text('Fetches data for Leetcode contests'),
-                    value: SharedPrefService().getBool(PREF_PROVIDER_LEETCODE),
+                    value: SharedPrefService()
+                        .getBool(PREF_PROVIDER_LEETCODE, def: true),
                     onChanged: (value) async {
                       SharedPrefService()
                           .saveBool(PREF_PROVIDER_LEETCODE, value);

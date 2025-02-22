@@ -40,7 +40,7 @@ Future<bool> onIosBackground(ServiceInstance service) async {
 
 void scheduleDailyNotification() {
   Timer.periodic(const Duration(hours: 20), (timer) {
-    if (SharedPrefService().getBool(PREF_DAILY_UPDATE)) {
+    if (SharedPrefService().getBool(PREF_DAILY_UPDATE, def: true)) {
       String? contestsJson = SharedPrefService().getString(PREF_STORE_CONTEST);
       if (contestsJson != null) {
         List<dynamic> contestsData = jsonDecode(contestsJson);
@@ -73,7 +73,7 @@ void scheduleDailyNotification() {
 
 void scheduleContestReminders() {
   Timer.periodic(const Duration(minutes: 30), (timer) async {
-    if (SharedPrefService().getBool(PREF_CONTEST_REMINDER)) {
+    if (SharedPrefService().getBool(PREF_CONTEST_REMINDER, def: true)) {
       String? contestsJson = SharedPrefService().getString(PREF_STORE_CONTEST);
       if (contestsJson != null) {
         List<dynamic> contestsData = jsonDecode(contestsJson);

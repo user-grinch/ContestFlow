@@ -1,0 +1,15 @@
+
+Contest Flow is a contest tracking app built using Flutter. It follows the Material Design You (MDY) and Material Design 3 (MD3) guidelines to provide a modern and user-friendly experience.
+
+Features
+- Track upcoming and ongoing programming contests.
+- Currently supports Codeforces as the data source.
+- Beautiful and responsive UI based on MDY and MD3.
+- Dark mode support.
+
+DataSource
+- CodeChef
+- Codeforces
+- LeetCode
+
+Others planned

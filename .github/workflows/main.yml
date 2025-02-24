@@ -1,2 +1,27 @@
-- name: Validate Fastlane Supply Metadata
-  uses: ashutoshgngwr/validate-fastlane-supply-metadata@v2.1.0
+name: Flutter Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.27.3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build APK
+        run: flutter build apk
+
+      - name: Build AppBundle
+        run: flutter build appbundle

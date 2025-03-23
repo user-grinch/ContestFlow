@@ -4,7 +4,7 @@ import 'package:contest_flow/modal/contestdata.dart';
 import 'package:contest_flow/services/dataservice.dart';
 import 'package:contest_flow/services/prefservice.dart';
 import 'package:contest_flow/util.dart';
-import 'package:contest_flow/widgets/bannerad.dart';
+// import 'package:contest_flow/widgets/bannerad.dart2';
 import 'package:contest_flow/widgets/contestcard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

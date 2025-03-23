@@ -184,6 +184,19 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   SwitchListTile(
                     activeColor: context.colorScheme.onSurface,
+                    title: const Text('Force Dark Mode'),
+                    subtitle: const Text(
+                        'Forces the app to use dark mode regardless of system settings'),
+                    value: context.read<ThemeProvider>().isForceDark,
+                    onChanged: (value) async {
+                      setState(() {
+                        context.read<ThemeProvider>().toggleForceDarkColors();
+                        setState(() {});
+                      });
+                    },
+                  ),
+                  SwitchListTile(
+                    activeColor: context.colorScheme.onSurface,
                     title: const Text('Material You Colors'),
                     subtitle: const Text('Enable Material You colors'),
                     value: context.read<ThemeProvider>().isDynamic,

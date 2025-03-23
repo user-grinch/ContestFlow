@@ -4,6 +4,7 @@ import 'package:contest_flow/modal/contestdata.dart';
 import 'package:contest_flow/services/dataservice.dart';
 import 'package:contest_flow/services/prefservice.dart';
 import 'package:contest_flow/util.dart';
+import 'package:contest_flow/widgets/bannerad.dart';
 import 'package:contest_flow/widgets/contestcard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,6 +110,7 @@ class _ContestViewState extends State<ContestView> {
                         Text(
                           "Running",
                           style: TextStyle(
+                            color: context.colorScheme.onSurfaceVariant,
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
@@ -133,6 +135,7 @@ class _ContestViewState extends State<ContestView> {
                 const SizedBox(
                   height: 20,
                 ),
+                // BannerAdWidget(),
                 if (upcomingContests.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.all(8.0),

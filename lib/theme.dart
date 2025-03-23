@@ -10,7 +10,8 @@ ThemeData getTheme(
 ) {
   ColorScheme defScheme = ColorScheme.fromSeed(
     seedColor: Colors.blueAccent.shade100,
-    brightness: isDark ? Brightness.dark : Brightness.light,
+    brightness:
+        isDark || provider.isForceDark ? Brightness.dark : Brightness.light,
   );
   if (provider.isAmoled) {
     return _getAmoledTheme();
@@ -54,14 +55,18 @@ ThemeData _getAmoledTheme() {
 class ThemeProvider extends ChangeNotifier {
   bool _isAmoled = false;
   bool _isDynamic = false;
+  bool _isForceDark = false;
 
   bool get isAmoled => _isAmoled;
   bool get isDynamic => _isDynamic;
+  bool get isForceDark => _isForceDark;
 
   Future<void> initTheme() async {
     await SharedPrefService().init();
     _isAmoled = SharedPrefService().getBool(PREF_AMOLED_DARK_MODE, def: false);
     _isDynamic = SharedPrefService().getBool(PREF_MATERIAL_THEMING, def: false);
+    _isForceDark =
+        SharedPrefService().getBool(PREF_AMOLED_FORCE_DARK_MODE, def: false);
     notifyListeners();
   }
 
@@ -74,6 +79,12 @@ class ThemeProvider extends ChangeNotifier {
   void toggleAmoledColors() {
     _isAmoled = !_isAmoled;
     SharedPrefService().saveBool(PREF_AMOLED_DARK_MODE, _isAmoled);
+    notifyListeners();
+  }
+
+  void toggleForceDarkColors() {
+    _isForceDark = !_isForceDark;
+    SharedPrefService().saveBool(PREF_AMOLED_FORCE_DARK_MODE, _isForceDark);
     notifyListeners();
   }
 }
